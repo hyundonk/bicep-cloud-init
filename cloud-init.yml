@@ -1,0 +1,13 @@
+#cloud-config
+write_files:
+  - owner: root:root
+    path: /etc/init.d/my_init_script.sh
+    permissions: '0777'
+    content: |
+      #!/bin/sh
+      curl "https://myteststorage.blob.core.windows.net/pub/sample.sh?sp=r&st=2022-09-29T12:34:52Z&se=2022-09-29T20:34:52Z&spr=https&sv=2021-06-08&sr=b&sig=S9CGkscrGxwfD1SZUY3Dwiv9wi7edC4dO1TaIaU8eO8%3D" --output /home/azureuser/sample.sh
+      sudo chmod 0777 /home/azureuser/sample.sh
+      sudo /home/azureuser/sample.sh
+      rm /home/azureuser/sample.sh
+runcmd:
+  - [ sh, /etc/init.d/my_init_script.sh]
